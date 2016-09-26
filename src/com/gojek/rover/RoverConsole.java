@@ -3,12 +3,16 @@ package com.gojek.rover;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by hendra.s@go-jek.com on 9/26/16.
  */
 public class RoverConsole {
 
+    protected Point2D upperBound;
 
     public void readUntilCtrlC() {
         BufferedReader br = null;
@@ -23,6 +27,10 @@ public class RoverConsole {
                 System.out.print("$ ");
                 String input = br.readLine();
 
+                if ("done".equals(input)) {
+                    calculateOutputs();
+                }
+
                 if (isVeryFirst) {
                     try {
                         setUpperCoordinate(input);
@@ -31,7 +39,6 @@ public class RoverConsole {
                         System.out.println("Invalid upper coordinate");
                     }
                 }
-
 
             }
 
@@ -48,7 +55,28 @@ public class RoverConsole {
         }
     }
 
-    private void setUpperCoordinate(String input) throws InvalidInputException {
+    private void calculateOutputs() {
+    }
 
+    private void setUpperCoordinate(String input) throws InvalidInputException {
+        this.upperBound = parsePoint2D(input);
+    }
+
+    public Point2D parsePoint2D(String input) throws InvalidInputException {
+        String pattern = "(\\d+) (\\d+)";
+
+        // Create a Pattern object
+        Pattern r = Pattern.compile(pattern);
+
+        // Now create matcher object.
+        Matcher m = r.matcher(input);
+
+        if (m.find()) {
+            int x = Integer.parseInt(m.group(1));
+            int y = Integer.parseInt(m.group(2));
+            return new Point2D(x, y);
+        }
+
+        throw new InvalidInputException("Invalid input value. Please use 'int int' (separated by space)");
     }
 }
