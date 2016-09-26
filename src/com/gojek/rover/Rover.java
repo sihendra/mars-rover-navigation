@@ -11,6 +11,14 @@ public class Rover {
         super();
     }
 
+    public RoverPosition getPosition() {
+        return position;
+    }
+
+    public void setPosition(RoverPosition position) {
+        this.position = position;
+    }
+
     public void move(RoverMovement movement) {
         position.move(movement);
     }

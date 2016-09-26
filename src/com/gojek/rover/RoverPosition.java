@@ -21,9 +21,9 @@ public class RoverPosition extends Point2D {
 
     public void move(RoverMovement movement) {
         if (movement == movement.L) {
-            direction = direction.left();
+            setDirection(direction.left());
         } else if (movement == movement.R) {
-            direction = direction.right();
+            setDirection(direction.right());
         } else if (movement == movement.M) {
             setX(getX() + direction.getMoveX());
             setY(getY() + direction.getMoveY());
