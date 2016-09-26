@@ -6,8 +6,15 @@ package com.gojek.rover;
 public class Rover {
     protected RoverPosition position;
 
+
     public Rover() {
         super();
+    }
+
+    public void move(RoverMovement movement) {
+        if (movement == RoverMovement.L) {
+
+        }
     }
 
 

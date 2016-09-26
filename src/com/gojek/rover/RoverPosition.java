@@ -10,4 +10,17 @@ public class RoverPosition extends Point2D {
         super(x, y);
         this.direction = direction;
     }
+
+    public void setDirection(CompassPoint direction) {
+        this.direction = direction;
+    }
+
+    public CompassPoint getDirection() {
+        return direction;
+    }
+
+    @Override
+    public String toString() {
+        return getX() + " " + getY() + " " + getDirection();
+    }
 }
