@@ -11,6 +11,7 @@ public class RoverTest {
     @Test
     public void move1() throws Exception {
         Rover r = new Rover();
+        r.setMaxBound(new Point2D(5,5));
         r.setPosition(new RoverPosition(1, 2, CompassPoint.NORTH));
 
         // LMLMLMLMM
@@ -36,6 +37,7 @@ public class RoverTest {
     public void move2() throws Exception {
         Rover r = new Rover();
         r.setPosition(new RoverPosition(3, 3, CompassPoint.EAST));
+        r.setMaxBound(new Point2D(5,5));
 
         // LMLMLMLMM
         r.move(RoverMovement.M);
@@ -55,6 +57,16 @@ public class RoverTest {
         assertEquals(1, finalPosition.getY());
         assertEquals(CompassPoint.EAST, finalPosition.getDirection());
 
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void isOutOfBound() throws InvalidInputException {
+        Rover r = new Rover();
+        r.setPosition(new RoverPosition(1, 1, CompassPoint.SOUTH));
+        r.setMaxBound(new Point2D(2, 2));
+
+        r.move(RoverMovement.M);
+        r.move(RoverMovement.M);
     }
 
 }
