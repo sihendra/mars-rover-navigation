@@ -14,6 +14,10 @@ public class RoverConsole {
 
     protected Point2D upperBound;
 
+    public Point2D getUpperBound() {
+        return upperBound;
+    }
+
     public void readUntilCtrlC() {
         BufferedReader br = null;
         try {
