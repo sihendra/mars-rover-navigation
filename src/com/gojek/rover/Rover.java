@@ -12,9 +12,7 @@ public class Rover {
     }
 
     public void move(RoverMovement movement) {
-        if (movement == RoverMovement.L) {
-
-        }
+        position.move(movement);
     }
 
 
