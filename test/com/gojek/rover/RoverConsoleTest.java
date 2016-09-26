@@ -1,5 +1,9 @@
 package com.gojek.rover;
 
+import org.junit.Test;
+
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -19,5 +23,28 @@ public class RoverConsoleTest {
         assertEquals(point.getX(), 5);
         assertEquals(point.getY(), 5);
     }
+
+    @Test
+    public void parseRoverPosition() throws Exception {
+        RoverConsole rc = new RoverConsole();
+        RoverPosition pos = rc.parseRoverPosition("1 2 N");
+
+        assertEquals(1, pos.getX());
+        assertEquals(2, pos.getY());
+        assertEquals(CompassPoint.NORTH, pos.getDirection());
+    }
+
+    @Test
+    public void parseRoverMovement() throws Exception {
+        RoverConsole rc = new RoverConsole();
+        List<RoverMovement> movements = rc.parseRoverMovements("LRMM");
+
+        assertEquals(RoverMovement.L, movements.get(0));
+        assertEquals(RoverMovement.R, movements.get(1));
+        assertEquals(RoverMovement.M, movements.get(2));
+        assertEquals(RoverMovement.M, movements.get(3));
+
+    }
+
 
 }

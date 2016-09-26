@@ -3,7 +3,7 @@ package com.gojek.rover;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,11 +12,10 @@ import java.util.regex.Pattern;
  */
 public class RoverConsole {
 
-    protected Point2D upperBound;
+    protected Point2D upperBound = new Point2D(0,0);
+    protected List<RoverPosition> roverPositions = new ArrayList<>();
+    protected List<List<RoverMovement>> roverMovements = new ArrayList<>();
 
-    public Point2D getUpperBound() {
-        return upperBound;
-    }
 
     public void readUntilCtrlC() {
         BufferedReader br = null;
@@ -26,7 +25,8 @@ public class RoverConsole {
             // for JDK 1.6, please use java.io.Console class to read system input.
             br = new BufferedReader(new InputStreamReader(System.in));
 
-            boolean isVeryFirst = true;
+            InputState inputState = InputState.MAX_BOUND;
+            Rover rover = null;
             while (true) {
                 System.out.print("$ ");
                 String input = br.readLine();
@@ -35,14 +35,31 @@ public class RoverConsole {
                     calculateOutputs();
                 }
 
-                if (isVeryFirst) {
+                if (inputState == InputState.MAX_BOUND) {
                     try {
                         setUpperCoordinate(input);
-                        isVeryFirst = false;
+                        inputState = inputState.getNextState();
                     } catch (InvalidInputException e) {
                         System.out.println("Invalid upper coordinate");
                     }
+                } else if (inputState == InputState.POS) {
+                    try {
+                        RoverPosition roverPosition = parseRoverPosition(input);
+                        roverPositions.add(roverPosition);
+                        inputState = inputState.getNextState();
+                    } catch (InvalidInputException e) {
+                        e.printStackTrace();
+                    }
+                } else if (inputState == InputState.MOVEMENTS) {
+                    try {
+                        List<RoverMovement> movements = parseRoverMovements(input);
+                        roverMovements.add(movements);
+                        inputState = inputState.getNextState();
+                    } catch (InvalidInputException e) {
+                        e.printStackTrace();
+                    }
                 }
+
 
             }
 
@@ -60,6 +77,7 @@ public class RoverConsole {
     }
 
     private void calculateOutputs() {
+
     }
 
     private void setUpperCoordinate(String input) throws InvalidInputException {
@@ -82,5 +100,80 @@ public class RoverConsole {
         }
 
         throw new InvalidInputException("Invalid input value. Please use 'int int' (separated by space)");
+    }
+
+    public RoverPosition parseRoverPosition(String input) throws InvalidInputException {
+        String pattern = "(\\d+) (\\d+) (\\w?)";
+
+        // Create a Pattern object
+        Pattern r = Pattern.compile(pattern);
+
+        // Now create matcher object.
+        Matcher m = r.matcher(input);
+
+        if (m.find()) {
+            int x = Integer.parseInt(m.group(1));
+            int y = Integer.parseInt(m.group(2));
+            CompassPoint dir = compassPointFromString(m.group(3));
+            if (dir == null) {
+                throw new InvalidInputException("Invalid compass point value. Please use N,E,S,W char only");
+            }
+            return new RoverPosition(x, y, dir);
+        }
+
+        throw new InvalidInputException("Invalid input value. Please use 'int int String' (separated by space)");
+    }
+
+    public List<RoverMovement> parseRoverMovements(String input) throws InvalidInputException {
+        List<RoverMovement> ret = new ArrayList<>();
+        if (input == null) {
+            return ret;
+        }
+
+        String pattern = "[LRM]+";
+
+        // Create a Pattern object
+        Pattern r = Pattern.compile(pattern);
+
+        // Now create matcher object.
+        Matcher m = r.matcher(input);
+
+        if (m.find()) {
+            String[] commands = input.split("(?!^)");
+            for (String command : commands) {
+                ret.add(roverMovementFromString(command));
+            }
+
+            return ret;
+        }
+
+        throw new InvalidInputException("Invalid input value. Please use L,R,M only");
+    }
+
+    public RoverMovement roverMovementFromString(String str) {
+        if (str == null) {
+            return null;
+        }
+
+        Map<String, RoverMovement> m = new HashMap<>();
+        m.put("L", RoverMovement.L);
+        m.put("R", RoverMovement.R);
+        m.put("M", RoverMovement.M);
+
+        return m.get(str.toUpperCase());
+    }
+
+    public CompassPoint compassPointFromString(String str) {
+        if (str == null) {
+            return null;
+        }
+
+        Map<String, CompassPoint> m = new HashMap<>();
+        m.put("N", CompassPoint.NORTH);
+        m.put("E", CompassPoint.EAST);
+        m.put("S", CompassPoint.SOUTH);
+        m.put("W", CompassPoint.WEST);
+
+        return m.get(str.toUpperCase());
     }
 }

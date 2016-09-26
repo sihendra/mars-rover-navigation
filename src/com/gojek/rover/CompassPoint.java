@@ -24,7 +24,7 @@ public enum CompassPoint {
         this.moveY = moveY;
     }
 
-    private CompassPoint directionsMap(String str) {
+    private CompassPoint parse(String str) {
         Map<String, CompassPoint> m = new HashMap<>();
         m.put("north", NORTH);
         m.put("east", EAST);
@@ -35,11 +35,11 @@ public enum CompassPoint {
     }
 
     public CompassPoint left() {
-        return directionsMap(this.left);
+        return parse(this.left);
     }
 
     public CompassPoint right() {
-        return directionsMap(this.right);
+        return parse(this.right);
     }
 
     public int getMoveX() {
