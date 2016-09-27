@@ -96,14 +96,13 @@ public class RoverConsole {
         int idx = 0;
         for(Rover r: rovers) {
             List<RoverCommand> roverCommandList = roverMovements.get(idx++);
-            for(RoverCommand movement: roverCommandList) {
-                try {
-                    r.move(movement);
-                } catch (InvalidInputException e) {
-                    System.out.println(e);
-                    break;
-                }
+            try {
+                r.move(roverCommandList);
+            } catch (InvalidInputException e) {
+                System.out.println(e);
+                break;
             }
+
             System.out.println(r.getPosition());
         }
     }
@@ -114,7 +113,7 @@ public class RoverConsole {
     }
 
     public Point2D parsePoint2D(String input) throws InvalidInputException {
-        String pattern = "(\\d+) (\\d+)";
+        String pattern = "^(\\d+) (\\d+)$";
 
         // Create a Pattern object
         Pattern r = Pattern.compile(pattern);
@@ -132,7 +131,7 @@ public class RoverConsole {
     }
 
     public RoverPosition parseRoverPosition(String input) throws InvalidInputException {
-        String pattern = "(\\d+) (\\d+) (\\w?)";
+        String pattern = "^(\\d+) (\\d+) (\\w?)$";
 
         // Create a Pattern object
         Pattern r = Pattern.compile(pattern);
@@ -159,7 +158,7 @@ public class RoverConsole {
             return ret;
         }
 
-        String pattern = "[LRM]+";
+        String pattern = "^[LRM]+$";
 
         // Create a Pattern object
         Pattern r = Pattern.compile(pattern);

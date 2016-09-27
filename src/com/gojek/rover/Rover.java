@@ -1,5 +1,7 @@
 package com.gojek.rover;
 
+import java.util.List;
+
 /**
  * Created by hendra.s@go-jek.com on 9/26/16.
  */
@@ -32,6 +34,13 @@ public class Rover {
             throw new InvalidInputException("Movement disallowed: out of bound");
         }
         position.move(movement);
+    }
+
+    public void move(List<RoverCommand> commands) throws InvalidInputException {
+        for (RoverCommand command : commands
+                ) {
+            move(command);
+        }
     }
 
     public boolean isOutOfBound(RoverCommand movement) {
