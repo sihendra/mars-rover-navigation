@@ -17,7 +17,7 @@ public class RoverConsole {
     protected List<List<RoverCommand>> roverMovements = new ArrayList<>();
 
 
-    public void readUntilCtrlC() {
+    public void readInput() {
         BufferedReader br = null;
         try {
 
