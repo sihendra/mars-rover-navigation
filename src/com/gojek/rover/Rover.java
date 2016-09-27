@@ -7,9 +7,7 @@ import org.omg.CORBA.DynAnyPackage.Invalid;
  */
 public class Rover {
     protected RoverPosition position;
-    protected Point2D maxBound;
-    protected Point2D minBound = new Point2D(0,0);
-
+    protected Plateau plateau;
 
     public Rover() {
         super();
@@ -23,20 +21,12 @@ public class Rover {
         this.position = position;
     }
 
-    public void setMinBound(Point2D minBound) {
-        this.minBound = minBound;
+    public void setPlateau(Plateau plateau) {
+        this.plateau = plateau;
     }
 
-    public Point2D getMinBound() {
-        return minBound;
-    }
-
-    public void setMaxBound(Point2D maxBound) {
-        this.maxBound = maxBound;
-    }
-
-    public Point2D getMaxBound() {
-        return maxBound;
+    public Plateau getPlateau() {
+        return plateau;
     }
 
     public void move(RoverMovement movement) throws InvalidInputException {
@@ -52,7 +42,7 @@ public class Rover {
 
         newPos.move(movement);
 
-        return newPos.getX() < minBound.getX() || newPos.getX() > maxBound.getX() || newPos.getY() < minBound.getY() || newPos.getY() > maxBound.getY();
+        return plateau.isOutOfBounds(newPos);
 
     }
 

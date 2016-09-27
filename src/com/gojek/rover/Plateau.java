@@ -7,6 +7,10 @@ public class Plateau {
     protected Point2D lowerBound;
     protected Point2D upperBound;
 
+    public Plateau() {
+        this(new Point2D(0, 0));
+    }
+
     public Plateau(Point2D upperBound) {
         this.lowerBound = new Point2D(0, 0);
         this.upperBound = upperBound;
@@ -20,9 +24,17 @@ public class Plateau {
         return lowerBound;
     }
 
+    public void setUpperBound(Point2D upperBound) {
+        this.upperBound = upperBound;
+    }
+
+    public void setLowerBound(Point2D lowerBound) {
+        this.lowerBound = lowerBound;
+    }
+
     public boolean isOutOfBounds(Point2D pos) {
 
-        return lowerBound.getX() > pos.getX() || upperBound.getX() <  pos.getX() ||
-               lowerBound.getY() > pos.getY() || upperBound.getY() <  pos.getY();
+        return lowerBound.getX() > pos.getX() || upperBound.getX() < pos.getX() ||
+                lowerBound.getY() > pos.getY() || upperBound.getY() < pos.getY();
     }
 }

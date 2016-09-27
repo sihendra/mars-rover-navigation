@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class RoverConsole {
 
-    protected Point2D upperBound = new Point2D(0,0);
+    protected Plateau plateau = new Plateau();
     protected List<RoverPosition> roverPositions = new ArrayList<>();
     protected List<List<RoverMovement>> roverMovements = new ArrayList<>();
 
@@ -84,10 +84,11 @@ public class RoverConsole {
             roverPositions = roverPositions.subList(0, roverMovements.size());
         }
 
+
         for (RoverPosition pos: roverPositions
              ) {
             Rover r = new Rover();
-            r.setMaxBound(this.upperBound);
+            r.setPlateau(plateau);
             r.setPosition(pos);
             rovers.add(r);
         }
@@ -108,7 +109,8 @@ public class RoverConsole {
     }
 
     private void setUpperCoordinate(String input) throws InvalidInputException {
-        this.upperBound = parsePoint2D(input);
+        Point2D upperBoudn = parsePoint2D(input);
+        this.plateau = new Plateau(upperBoudn);
     }
 
     public Point2D parsePoint2D(String input) throws InvalidInputException {
