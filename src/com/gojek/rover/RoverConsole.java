@@ -38,7 +38,7 @@ public class RoverConsole {
 
                 if (inputState == InputState.MAX_BOUND) {
                     try {
-                        setUpperCoordinate(input);
+                        plateau = parsePlateauMaxBound(input);
                         inputState = inputState.getNextState();
                     } catch (InvalidInputException e) {
                         System.out.println("Invalid upper coordinate");
@@ -107,12 +107,7 @@ public class RoverConsole {
         }
     }
 
-    private void setUpperCoordinate(String input) throws InvalidInputException {
-        Point2D upperBoudn = parsePoint2D(input);
-        this.plateau = new Plateau(upperBoudn);
-    }
-
-    public Point2D parsePoint2D(String input) throws InvalidInputException {
+    public Plateau parsePlateauMaxBound(String input) throws InvalidInputException {
         String pattern = "^(\\d+) (\\d+)$";
 
         // Create a Pattern object
@@ -124,7 +119,7 @@ public class RoverConsole {
         if (m.find()) {
             int x = Integer.parseInt(m.group(1));
             int y = Integer.parseInt(m.group(2));
-            return new Point2D(x, y);
+            return new Plateau(new Point2D(x, y));
         }
 
         throw new InvalidInputException("Invalid input value. Please use 'int int' (separated by space)");

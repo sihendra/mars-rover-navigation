@@ -12,18 +12,18 @@ import static org.junit.Assert.assertEquals;
 public class RoverConsoleTest {
 
     @org.junit.Test
-    public void parsePoint2D() throws Exception {
+    public void parsePlateau() throws Exception {
         RoverConsole rc = new RoverConsole();
-        Point2D point = rc.parsePoint2D("5 5");
-
+        Plateau plateau = rc.parsePlateauMaxBound("5 5");
+        Point2D point = plateau.getUpperBound();
         assertEquals(point.getX(), 5);
         assertEquals(point.getY(), 5);
     }
 
     @org.junit.Test(expected = InvalidInputException.class)
-    public void parsePoint2DInvalidY() throws Exception {
+    public void parsePlateauInvalidY() throws Exception {
         RoverConsole rc = new RoverConsole();
-        Point2D point = rc.parsePoint2D("5 5asdsad");
+        Plateau plateau = rc.parsePlateauMaxBound("5 5asdsad");
     }
 
     @Test
