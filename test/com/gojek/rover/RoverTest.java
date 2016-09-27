@@ -15,15 +15,15 @@ public class RoverTest {
         r.setPosition(new RoverPosition(1, 2, CompassPoint.NORTH));
 
         // LMLMLMLMM
-        r.move(RoverMovement.L);
-        r.move(RoverMovement.M);
-        r.move(RoverMovement.L);
-        r.move(RoverMovement.M);
-        r.move(RoverMovement.L);
-        r.move(RoverMovement.M);
-        r.move(RoverMovement.L);
-        r.move(RoverMovement.M);
-        r.move(RoverMovement.M);
+        r.move(RoverCommand.L);
+        r.move(RoverCommand.M);
+        r.move(RoverCommand.L);
+        r.move(RoverCommand.M);
+        r.move(RoverCommand.L);
+        r.move(RoverCommand.M);
+        r.move(RoverCommand.L);
+        r.move(RoverCommand.M);
+        r.move(RoverCommand.M);
 
         RoverPosition finalPosition = r.getPosition();
 
@@ -40,16 +40,16 @@ public class RoverTest {
         r.setPlateau(new Plateau(new Point2D(5,5)));
 
         // LMLMLMLMM
-        r.move(RoverMovement.M);
-        r.move(RoverMovement.M);
-        r.move(RoverMovement.R);
-        r.move(RoverMovement.M);
-        r.move(RoverMovement.M);
-        r.move(RoverMovement.R);
-        r.move(RoverMovement.M);
-        r.move(RoverMovement.R);
-        r.move(RoverMovement.R);
-        r.move(RoverMovement.M);
+        r.move(RoverCommand.M);
+        r.move(RoverCommand.M);
+        r.move(RoverCommand.R);
+        r.move(RoverCommand.M);
+        r.move(RoverCommand.M);
+        r.move(RoverCommand.R);
+        r.move(RoverCommand.M);
+        r.move(RoverCommand.R);
+        r.move(RoverCommand.R);
+        r.move(RoverCommand.M);
 
         RoverPosition finalPosition = r.getPosition();
 
@@ -65,8 +65,8 @@ public class RoverTest {
         r.setPosition(new RoverPosition(1, 1, CompassPoint.SOUTH));
         r.setPlateau(new Plateau(new Point2D(2, 2)));
 
-        r.move(RoverMovement.M);
-        r.move(RoverMovement.M);
+        r.move(RoverCommand.M);
+        r.move(RoverCommand.M);
     }
 
 }

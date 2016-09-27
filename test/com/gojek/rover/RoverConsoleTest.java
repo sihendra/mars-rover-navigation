@@ -37,12 +37,12 @@ public class RoverConsoleTest {
     @Test
     public void parseRoverMovement() throws Exception {
         RoverConsole rc = new RoverConsole();
-        List<RoverMovement> movements = rc.parseRoverMovements("LRMM");
+        List<RoverCommand> movements = rc.parseRoverMovements("LRMM");
 
-        assertEquals(RoverMovement.L, movements.get(0));
-        assertEquals(RoverMovement.R, movements.get(1));
-        assertEquals(RoverMovement.M, movements.get(2));
-        assertEquals(RoverMovement.M, movements.get(3));
+        assertEquals(RoverCommand.L, movements.get(0));
+        assertEquals(RoverCommand.R, movements.get(1));
+        assertEquals(RoverCommand.M, movements.get(2));
+        assertEquals(RoverCommand.M, movements.get(3));
 
     }
 

@@ -19,7 +19,7 @@ public class RoverPosition extends Point2D {
         return direction;
     }
 
-    public void move(RoverMovement movement) {
+    public void move(RoverCommand movement) {
         if (movement == movement.L) {
             setDirection(direction.left());
         } else if (movement == movement.R) {

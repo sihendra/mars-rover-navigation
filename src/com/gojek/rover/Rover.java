@@ -1,7 +1,5 @@
 package com.gojek.rover;
 
-import org.omg.CORBA.DynAnyPackage.Invalid;
-
 /**
  * Created by hendra.s@go-jek.com on 9/26/16.
  */
@@ -29,14 +27,14 @@ public class Rover {
         return plateau;
     }
 
-    public void move(RoverMovement movement) throws InvalidInputException {
+    public void move(RoverCommand movement) throws InvalidInputException {
         if (isOutOfBound(movement)) {
             throw new InvalidInputException("Movement disallowed: out of bound");
         }
         position.move(movement);
     }
 
-    public boolean isOutOfBound(RoverMovement movement) {
+    public boolean isOutOfBound(RoverCommand movement) {
         RoverPosition currentPos = getPosition();
         RoverPosition newPos = new RoverPosition(currentPos.getX(), currentPos.getY(), currentPos.getDirection());
 

@@ -14,7 +14,7 @@ public class RoverConsole {
 
     protected Plateau plateau = new Plateau();
     protected List<RoverPosition> roverPositions = new ArrayList<>();
-    protected List<List<RoverMovement>> roverMovements = new ArrayList<>();
+    protected List<List<RoverCommand>> roverMovements = new ArrayList<>();
 
 
     public void readUntilCtrlC() {
@@ -53,7 +53,7 @@ public class RoverConsole {
                     }
                 } else if (inputState == InputState.MOVEMENTS) {
                     try {
-                        List<RoverMovement> movements = parseRoverMovements(input);
+                        List<RoverCommand> movements = parseRoverMovements(input);
                         roverMovements.add(movements);
                         inputState = inputState.getNextState();
                     } catch (InvalidInputException e) {
@@ -95,8 +95,8 @@ public class RoverConsole {
 
         int idx = 0;
         for(Rover r: rovers) {
-            List<RoverMovement> roverMovementList = roverMovements.get(idx++);
-            for(RoverMovement movement: roverMovementList) {
+            List<RoverCommand> roverCommandList = roverMovements.get(idx++);
+            for(RoverCommand movement: roverCommandList) {
                 try {
                     r.move(movement);
                 } catch (InvalidInputException e) {
@@ -153,8 +153,8 @@ public class RoverConsole {
         throw new InvalidInputException("Invalid input value. Please use 'int int String' (separated by space)");
     }
 
-    public List<RoverMovement> parseRoverMovements(String input) throws InvalidInputException {
-        List<RoverMovement> ret = new ArrayList<>();
+    public List<RoverCommand> parseRoverMovements(String input) throws InvalidInputException {
+        List<RoverCommand> ret = new ArrayList<>();
         if (input == null) {
             return ret;
         }
@@ -179,15 +179,15 @@ public class RoverConsole {
         throw new InvalidInputException("Invalid input value. Please use L,R,M only");
     }
 
-    public RoverMovement roverMovementFromString(String str) {
+    public RoverCommand roverMovementFromString(String str) {
         if (str == null) {
             return null;
         }
 
-        Map<String, RoverMovement> m = new HashMap<>();
-        m.put("L", RoverMovement.L);
-        m.put("R", RoverMovement.R);
-        m.put("M", RoverMovement.M);
+        Map<String, RoverCommand> m = new HashMap<>();
+        m.put("L", RoverCommand.L);
+        m.put("R", RoverCommand.R);
+        m.put("M", RoverCommand.M);
 
         return m.get(str.toUpperCase());
     }
