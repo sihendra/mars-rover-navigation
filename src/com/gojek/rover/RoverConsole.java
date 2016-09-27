@@ -31,8 +31,9 @@ public class RoverConsole {
                 System.out.print("$ ");
                 String input = br.readLine();
 
-                if ("done".equals(input)) {
+                if ("done".equals(input) || "".equals(input)) {
                     calculateOutputs();
+                    break;
                 }
 
                 if (inputState == InputState.MAX_BOUND) {
@@ -48,7 +49,7 @@ public class RoverConsole {
                         roverPositions.add(roverPosition);
                         inputState = inputState.getNextState();
                     } catch (InvalidInputException e) {
-                        e.printStackTrace();
+                        System.out.println(e.getMessage());
                     }
                 } else if (inputState == InputState.MOVEMENTS) {
                     try {
@@ -56,7 +57,7 @@ public class RoverConsole {
                         roverMovements.add(movements);
                         inputState = inputState.getNextState();
                     } catch (InvalidInputException e) {
-                        e.printStackTrace();
+                        System.out.println(e.getMessage());
                     }
                 }
 
@@ -77,7 +78,33 @@ public class RoverConsole {
     }
 
     private void calculateOutputs() {
+        List<Rover> rovers = new ArrayList<>();
 
+        if (roverPositions.size() > roverMovements.size()) {
+            roverPositions = roverPositions.subList(0, roverMovements.size());
+        }
+
+        for (RoverPosition pos: roverPositions
+             ) {
+            Rover r = new Rover();
+            r.setMaxBound(this.upperBound);
+            r.setPosition(pos);
+            rovers.add(r);
+        }
+
+        int idx = 0;
+        for(Rover r: rovers) {
+            List<RoverMovement> roverMovementList = roverMovements.get(idx++);
+            for(RoverMovement movement: roverMovementList) {
+                try {
+                    r.move(movement);
+                } catch (InvalidInputException e) {
+                    System.out.println(e);
+                    break;
+                }
+            }
+            System.out.println(r.getPosition());
+        }
     }
 
     private void setUpperCoordinate(String input) throws InvalidInputException {
