@@ -29,11 +29,11 @@ public class Rover {
         return plateau;
     }
 
-    public void move(RoverCommand movement) throws InvalidInputException {
-        if (isOutOfBound(movement)) {
+    public void move(RoverCommand command) throws InvalidInputException {
+        if (isOutOfBound(command)) {
             throw new InvalidInputException("Movement disallowed: out of bound");
         }
-        position.move(movement);
+        position.move(command);
     }
 
     public void move(List<RoverCommand> commands) throws InvalidInputException {
