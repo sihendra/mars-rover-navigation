@@ -7,21 +7,23 @@ import java.util.Map;
  * Created by hendra.s@go-jek.com on 9/26/16.
  */
 public enum CompassPoint {
-    NORTH("west", "east", 0, 1),
-    EAST("north", "south", 1, 0),
-    SOUTH("east", "west", 0, -1),
-    WEST("south", "north", -1, 0);
+    NORTH("N","west", "east", 0, 1),
+    EAST("E","north", "south", 1, 0),
+    SOUTH("S","east", "west", 0, -1),
+    WEST("S","south", "north", -1, 0);
 
+    private String stringValue;
     private String left;
     private String right;
     private int moveX;
     private int moveY;
 
-    CompassPoint(String left, String right, int moveX, int moveY) {
+    CompassPoint(String stringValue, String left, String right, int moveX, int moveY) {
         this.left = left;
         this.right = right;
         this.moveX = moveX;
         this.moveY = moveY;
+        this.stringValue = stringValue;
     }
 
     private CompassPoint parse(String str) {
@@ -48,5 +50,10 @@ public enum CompassPoint {
 
     public int getMoveY() {
         return moveY;
+    }
+
+    @Override
+    public String toString() {
+        return stringValue;
     }
 }
